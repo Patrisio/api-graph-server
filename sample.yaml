@@ -1,0 +1,3942 @@
+openapi: 3.0.0
+info:
+  version: v1.0
+  title: Focus API
+servers:
+  - url: https://emrm-ift.sberbank.ru/efs-emrm/emrm
+    description: IFT
+  - url: https://emrm-psi.sberbank.ru/efs-emrm/emrm
+    description: PSI
+  - url: https://emrm.sberbank.ru/efs-emrm/emrm
+    description: PROM
+paths:
+  /activities/v1/meetings/create:
+    post:
+      tags:
+        - activities-meetings
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=6025056911
+      description: Создание встречи
+      operationId: createMeeting
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeetingsCreateRq"
+        required: true
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeetingsCreateRs"
+  "/activities/v1/meetings/{meetingId}/actions/change-address":
+    post:
+      tags:
+        - activities-meetings
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=5856661559#expand-
+      description: Редактирование адреса встречи
+      operationId: changeMeetingAddress
+      parameters:
+        - $ref: "#/components/parameters/meetingIdParam"
+      requestBody:
+        description: >
+          Параметры для редактирования адреса встречи. Обязательные для передачи
+          параметры запроса: locationPlanType, locationPlan
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeetingsIdActionsChangeAddressRq"
+        required: true
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeetingsIdActionsChangeAddressRs"
+  "/activities/v1/meetings/{meetingId}/actions/change-date":
+    post:
+      tags:
+        - activities-meetings
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=6360109913
+      description: Редактирование даты и времени встречи
+      operationId: changeMeetingDate
+      parameters:
+        - $ref: "#/components/parameters/meetingIdParam"
+      requestBody:
+        description: >
+          Параметры для редактирования даты и времени встречи. Обязательные для
+          передачи параметры запроса: planDate - плановая дата встречи
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeetingsIdActionsChangeDateRq"
+        required: true
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeetingsIdActionsChangeDateRs"
+  "/activities/v1/meetings/{meetingId}/actions/change-representative":
+    post:
+      tags:
+        - activities-meetings
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=6360107217#expand-
+      description: Редактирование представителя во встрече
+      operationId: changeMeetingRepresentative
+      parameters:
+        - $ref: "#/components/parameters/meetingIdParam"
+      requestBody:
+        description: >
+          Параметры для редактирования представителя во встрече. Обязательные
+          для передачи параметры запроса: ID представителя
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeetingsIdActionsChangeRepresentativeRq"
+        required: true
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeetingsIdActionsChangeRepresentativeRs"
+  "/activities/v1/meetings/{meetingId}/actions/create-comment":
+    post:
+      tags:
+        - activities-meetings
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=6367913165
+      description: Добавление комментария к встрече
+      operationId: createMeetingComment
+      parameters:
+        - $ref: "#/components/parameters/meetingIdParam"
+      requestBody:
+        description: >
+          Параметры для добавления комментария к встрече. Обязательные для
+          передачи параметры запроса: ID встречи, комментарий
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeetingsIdActionsCreateCommentRq"
+        required: true
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeetingsIdActionsCreateCommentRs"
+  "/activities/v1/meetings/{meetingId}/actions/create-task":
+    post:
+      tags:
+        - activities-meetings
+      description: создание задачи
+      externalDocs:
+        description: Бизнес логика сервиса удаления задачи
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=5224439502
+      operationId: createMeetingTask
+      parameters:
+        - $ref: "#/components/parameters/meetingIdParam"
+      requestBody:
+        description: параметры создания задачи
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TasksCreateRq"
+      responses:
+        "200":
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TasksCreateRs"
+  "/activities/v1/meetings/{meetingId}/actions/delete-task/{taskId}":
+    post:
+      tags:
+        - activities-meetings
+      description: удаление задачи
+      externalDocs:
+        description: Бизнес логика сервиса удаления задачи
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=4835023900
+      operationId: deleteMeetingTask
+      parameters:
+        - $ref: "#/components/parameters/meetingIdParam"
+        - $ref: "#/components/parameters/taskIdParam"
+      requestBody:
+        description: параметры удаления задачи
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TasksIdActionsDeleteRq"
+      responses:
+        "200":
+          description: Ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TasksIdActionsDeleteRs"
+  "/activities/v1/meetings/{meetingId}/actions/edit-comment/{commentId}":
+    post:
+      tags:
+        - activities-meetings
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=6469878505
+      description: Редактирование комментария во встрече
+      operationId: editMeetingComment
+      parameters:
+        - $ref: "#/components/parameters/meetingIdParam"
+        - $ref: "#/components/parameters/meetingCommentIdParam"
+      requestBody:
+        description: >
+          Параметры для редактирования комментария во встрече. Обязательные для
+          передачи параметры запроса: comment
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeetingsIdActionsEditCommentRq"
+        required: true
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeetingsIdActionsEditCommentRs"
+  "/activities/v1/meetings/{meetingId}/actions/planning":
+    post:
+      tags:
+        - activities-meetings
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=5266869912
+      description: Планирование встречи
+      operationId: planMeeting
+      parameters:
+        - $ref: "#/components/parameters/meetingIdParam"
+      requestBody:
+        description: >
+          Параметры для планирования встречи. Обязательные для передачи
+          параметры запроса: ID организации, плановая дата встречи
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeetingsIdActionsPlanningRq"
+        required: true
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeetingsIdActionsPlanningRs"
+  "/activities/v1/meetings/{meetingId}/list-of-comments":
+    get:
+      tags:
+        - activities-meetings
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=6474117629
+      description: Получение списка комментариев по ID встречи
+      operationId: getCommentsByMeetingId
+      parameters:
+        - $ref: "#/components/parameters/meetingIdParam"
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeetingsIdListOfCommentsRs"
+  "/activities/v1/meetings/{meetingId}":
+    get:
+      tags:
+        - activities-meetings
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=5457610235
+      description: Получение детальной карточки встречи по id
+      operationId: getMeetingById
+      parameters:
+        - $ref: "#/components/parameters/meetingIdParam"
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeetingsIdRs"
+  /activities/v1/meetings:
+    post:
+      tags:
+        - activities-meetings
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=5457610235
+      description: Получение списка детальных карточек встреч
+      operationId: getMeetings
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeetingsRq"
+        required: true
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeetingsRs"
+  /checklist-templates/v1/checklist-chapter:
+    post:
+      tags:
+        - checklist-templates
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=6025647072
+      description: Получение разделов в шаблон чек-листов
+      operationId: getChecklistChapter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChecklistChapterRq"
+      responses:
+        "200":
+          description: Объект ответа об успешности передачи данных на BH, для наполнения
+            таблицы
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChecklistChapterRs"
+  /checklist-templates/v1/checklist-question:
+    post:
+      tags:
+        - checklist-templates
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=6025647072
+      description: Получение вопросов в шаблон чек-листов
+      operationId: getChecklistQuestion
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChecklistQuestionRq"
+      responses:
+        "200":
+          description: Объект ответа об успешности передачи данных на BH, для наполнения
+            таблицы
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChecklistQuestionRs"
+  /checklist-templates/v1/checklist-recommendation:
+    post:
+      tags:
+        - checklist-templates
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=6025647072
+      description: Получение рекомендаций в шаблон чек-листов
+      operationId: getChecklistRecommendation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChecklistRecommendationRq"
+      responses:
+        "200":
+          description: Объект ответа об успешности передачи данных на BH, для наполнения
+            таблицы
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChecklistRecommendationRs"
+  /communication/click-to-call:
+    post:
+      tags:
+        - communication
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/display/EMRMSME/POST+click-to-call#expand-
+      description: Звонок через Единый номер (Click-to-call)
+      operationId: clickToCall
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommunicationClickToCallRq"
+        required: true
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommunicationClickToCallRs"
+  /employee/v2/auth:
+    get:
+      tags:
+        - employee
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: ""
+      description: Авторизация пользователя в ЕМРМ, в запросе передаём авторизационный
+        header Basic base64(userid:password)
+      operationId: employeeAuthV2
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthRs"
+  /mobile-log/sup:
+    post:
+      tags:
+        - mobile-log-sup
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=5283055425
+      description: Получение СУП-параметров по наименованию
+      operationId: getSup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SupRq"
+      responses:
+        "200":
+          description: Получение списка СУП-параметров
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SupRs"
+  /mobile-log/v2:
+    post:
+      tags:
+        - mobile-log
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: ""
+      description: Отправка мобильных логов
+      operationId: sendMobileLogV2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MobileLogRq"
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MobileLogRs"
+  /mobile-log:
+    post:
+      tags:
+        - mobile-log
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: ""
+      description: Отправка мобильных логов
+      operationId: sendMobileLog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MobileLogRq"
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MobileLogRs"
+  "/organizations/v1/{organizationId}/active-products":
+    post:
+      tags:
+        - organizations-active-products
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=4398910512
+      description: Получение списка действующих продуктов Клиента
+      operationId: getOrganizationActiveProducts
+      parameters:
+        - $ref: "#/components/parameters/organizationIdParam"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrganizationsActiveProductsRq"
+      responses:
+        "200":
+          description: Список продуктов успешно передан
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrganizationsActiveProductsRs"
+  "/organizations/v1/{organizationId}/notes/create":
+    post:
+      tags:
+        - organizations-notes
+      description: Создание заметки
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=4480933384
+      operationId: createOrganizationNote
+      parameters:
+        - $ref: "#/components/parameters/organizationIdParam"
+      requestBody:
+        description: параметры для создания заметки. Все параметры в теле запроса
+          являются обязательным для передачи
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrganizationNotesCreateRq"
+      responses:
+        "200":
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrganizationNotesCreateRs"
+  "/organizations/v1/{organizationId}/notes/{organizationNoteId}/actions/delete":
+    post:
+      tags:
+        - organizations-notes
+      description: редактирование заметки
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=4488533161
+      operationId: deleteOrganizationNote
+      parameters:
+        - $ref: "#/components/parameters/organizationIdParam"
+        - $ref: "#/components/parameters/organizationNoteIdParam"
+      responses:
+        "200":
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrganizationNotesIdActionsDeleteRs"
+  "/organizations/v1/{organizationId}/notes/{organizationNoteId}/actions/edit":
+    post:
+      tags:
+        - organizations-notes
+      description: редактирование заметки
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=4488533161
+      operationId: editOrganizationNote
+      parameters:
+        - $ref: "#/components/parameters/organizationIdParam"
+        - $ref: "#/components/parameters/organizationNoteIdParam"
+      requestBody:
+        description: параметры для редактирования заметки
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrganizationNotesIdActionsEditRq"
+      responses:
+        "200":
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrganizationNotesIdActionsEditRs"
+  "/organizations/v1/{organizationId}/notes":
+    get:
+      tags:
+        - organizations-notes
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=5067344765
+      description: Получение списка заметок Организации
+      operationId: getOrganizationNotes
+      parameters:
+        - $ref: "#/components/parameters/organizationIdParam"
+      responses:
+        "200":
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrganizationNotesRs"
+  "/organizations/v1/{organizationId}/representatives/create":
+    post:
+      tags:
+        - organizations-representatives
+      description: |
+        Создание представителя организации
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=4985162024
+      operationId: createOrganizationRepresentative
+      parameters:
+        - $ref: "#/components/parameters/organizationIdParam"
+      requestBody:
+        description: >
+          Параметры для создания представителя.  Обязательные для передачи
+          параметры запроса: фамилия, имя, 1 телефон
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RepresentativesCreateRq"
+        required: true
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RepresentativesCreateRs"
+  "/organizations/v1/{organizationId}/representatives/{representativeId}/actions/delete":
+    post:
+      tags:
+        - organizations-representatives
+      description: |
+        Удаление представителя организации
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=5737548407
+      operationId: deleteOrganizationRepresentative
+      parameters:
+        - $ref: "#/components/parameters/organizationIdParam"
+        - $ref: "#/components/parameters/representativeIdParam"
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RepresentativesIdActionsDeleteRs"
+  "/organizations/v1/{organizationId}/representatives/{representativeId}/actions/update":
+    post:
+      tags:
+        - organizations-representatives
+      description: |
+        Обновление представителя организации
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=4985162085
+      operationId: updateOrganizationRepresentative
+      parameters:
+        - $ref: "#/components/parameters/organizationIdParam"
+        - $ref: "#/components/parameters/representativeIdParam"
+      requestBody:
+        description: |
+          Обновляемые параметры представителя.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RepresentativesIdActionsUpdateRq"
+        required: true
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RepresentativesIdActionsUpdateRs"
+  "/organizations/v1/{organizationId}/representatives/{representativeId}":
+    get:
+      tags:
+        - organizations-representatives
+      externalDocs:
+        description: Бизнес-логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=5711659290
+      description: Получение детальной карточки Представителя организации по
+        уникальным идентификаторам organizationId, representativeId
+      operationId: getOrganizationRepresentativeById
+      parameters:
+        - $ref: "#/components/parameters/organizationIdParam"
+        - $ref: "#/components/parameters/representativeIdParam"
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RepresentativesIdRs"
+  "/organizations/v1/{organizationId}":
+    get:
+      tags:
+        - organizations
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=4686219734
+      description: Получение детальной карточки Организации по уникальному
+        идентификатору organizationId
+      operationId: getOrganizationById
+      parameters:
+        - $ref: "#/components/parameters/organizationIdParam"
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrganizationsIdRs"
+  /organizations/v1/view:
+    post:
+      tags:
+        - organizations
+      description: >
+        Получения списка Организаций, закрепленных за менеджером (по табельному
+        номеру), либо по коллекции organizationId
+      externalDocs:
+        description: Бизнес логика сервиса
+        url: https://confluence.sberbank.ru/pages/viewpage.action?pageId=4512581589
+      operationId: getOrganizationViews
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrganizationsViewRq"
+        required: true
+      responses:
+        "200":
+          description: Ответ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrganizationsViewRs"
+components:
+  schemas:
+    MeetingsCreateRq:
+      type: object
+      description: Объект запроса создания встречи
+      additionalProperties: false
+      required:
+        - organizationId
+        - planDate
+      properties:
+        organizationId:
+          $ref: "#/components/schemas/OrganizationIdProp"
+        representativeId:
+          $ref: "#/components/schemas/RepresentativeIdProp"
+        locationPlanType:
+          $ref: "#/components/schemas/MeetingLocationPlanTypeProp"
+        locationPlan:
+          $ref: "#/components/schemas/MeetingLocationPlanProp"
+        locationPlanLatitude:
+          $ref: "#/components/schemas/MeetingLocationPlanLatitudeProp"
+        locationPlanLongitude:
+          $ref: "#/components/schemas/MeetingLocationPlanLongitudeProp"
+        planExact:
+          $ref: "#/components/schemas/MeetingPlanExactProp"
+        planDate:
+          $ref: "#/components/schemas/MeetingPlanDateProp"
+        planTime:
+          $ref: "#/components/schemas/MeetingPlanTimeProp"
+        planDuration:
+          $ref: "#/components/schemas/MeetingPlanDurationProp"
+        channel:
+          $ref: "#/components/schemas/MeetingChannelProp"
+        scenario:
+          $ref: "#/components/schemas/MeetingScenarioCodeProp"
+        listOfTask:
+          type: array
+          maxItems: 255
+          description: Массив задач, которые необходимо создать и привязать к новой встрече
+          items:
+            $ref: "#/components/schemas/TaskForCreate"
+    OrganizationIdProp:
+      description: Уникальный идентификатор Организации
+      type: string
+      maxLength: 50
+      pattern: ^[0-9]+$
+    RepresentativeIdProp:
+      description: Уникальный идентификатор Представителя
+      type: string
+      maxLength: 50
+      pattern: ^[0-9]+$
+    MeetingLocationPlanTypeProp:
+      description: Тип планового адрса встречи
+      type: string
+      maxLength: 50
+      pattern: ^.*$
+    MeetingLocationPlanProp:
+      description: Плановый адрес встречи
+      type: string
+      maxLength: 255
+      pattern: ^.*$
+    MeetingLocationPlanLatitudeProp:
+      description: Широта планового адреса встречи
+      type: string
+      maxLength: 50
+      pattern: ^.,[0-9]+$
+    MeetingLocationPlanLongitudeProp:
+      description: Долгота планового адреса встречи
+      type: string
+      maxLength: 50
+      pattern: ^.,[0-9]+$
+    MeetingPlanExactProp:
+      description: Признак встречи без времени
+      type: boolean
+    MeetingPlanDateProp:
+      description: Плановая дата
+      type: string
+      pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+    MeetingPlanTimeProp:
+      description: Плановое время
+      type: string
+      pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+    MeetingPlanDurationProp:
+      description: Плановая длительность встречи
+      type: integer
+      maximum: 2147483647
+      minimum: 0
+    MeetingChannelProp:
+      description: Канал поступления
+      type: string
+      maxLength: 50
+      pattern: ^.*$
+    MeetingScenarioCodeProp:
+      description: Код сценария встречи
+      type: string
+      maxLength: 50
+      pattern: ^.*$
+    TaskForCreate:
+      type: object
+      required:
+        - typeCode
+      additionalProperties: false
+      properties:
+        typeCode:
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+          description: Код типа задачи
+        productCode:
+          description: Коллекция кодов продуктов
+          type: array
+          maxItems: 50
+          items:
+            type: string
+            maxLength: 255
+            pattern: ^.*$
+        productGroupId:
+          description: Коллекция кодов групп продуктов
+          type: array
+          maxItems: 50
+          items:
+            type: string
+            maxLength: 255
+            pattern: ^.*$
+    MeetingsCreateRs:
+      type: object
+      description: Объект ответа создания встречи
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/Meeting"
+      additionalProperties: false
+    Meeting:
+      description: Сущность встреча
+      type: object
+      additionalProperties: false
+      required:
+        - scenario
+        - channel
+        - remeeting
+        - planExact
+      allOf:
+        - $ref: "#/components/schemas/MeetingBase"
+      properties:
+        planStartDate:
+          description: Плановая дата начала встречи
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        factStartDate:
+          description: Фактическая дата начала встречи
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        factEndDate:
+          description: Фактическая дата завершения встречи
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        clndrPlanStartDate:
+          description: Плановая дата начала по календарю исполнителя
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        scenario:
+          $ref: "#/components/schemas/MeetingScenario"
+        source:
+          $ref: "#/components/schemas/MeetingSource"
+        channel:
+          $ref: "#/components/schemas/MeetingChannel"
+        resultComment:
+          $ref: "#/components/schemas/MeetingResultCommentProp"
+        listOfTasks:
+          type: array
+          maxItems: 255
+          description: Массив карточек детальной информации по задачам
+          items:
+            $ref: "#/components/schemas/Task"
+        remeeting:
+          description: Признак повторной встречи
+          type: boolean
+        planExact:
+          $ref: "#/components/schemas/MeetingPlanExactProp"
+        participants:
+          description: Участники встречи
+          type: array
+          maxItems: 20
+          items:
+            $ref: "#/components/schemas/MeetingParticipant"
+        representativeId:
+          $ref: "#/components/schemas/RepresentativeIdProp"
+        addressInfo:
+          $ref: "#/components/schemas/MeetingAddressInfo"
+        comments:
+          description: Комментарии к встрече
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/MeetingComment"
+    MeetingScenario:
+      type: object
+      description: Сценарий встречи
+      additionalProperties: false
+      required:
+        - code
+        - name
+      properties:
+        code:
+          $ref: "#/components/schemas/MeetingScenarioCodeProp"
+        name:
+          description: Наименование сценария
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+    MeetingSource:
+      type: object
+      description: Источник/ Инициатор встречи/ задачи
+      additionalProperties: false
+      required:
+        - code
+        - name
+      properties:
+        code:
+          description: Код инициатора
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+        name:
+          description: Наименование инициатора
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+    MeetingChannel:
+      type: object
+      description: Канал поступления встречи/ задачи
+      required:
+        - code
+        - name
+      properties:
+        code:
+          description: Код канала поступления
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+        name:
+          description: Наименование канала поступления
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+      additionalProperties: false
+    MeetingResultCommentProp:
+      description: Комментарий к результату встречи
+      type: string
+      maxLength: 2000
+      pattern: ^.*$
+    Task:
+      type: object
+      required:
+        - id
+        - organizationId
+        - type
+        - result
+      properties:
+        id:
+          $ref: "#/components/schemas/TaskIdProp"
+        organizationId:
+          $ref: "#/components/schemas/OrganizationIdProp"
+        parentEntityId:
+          description: Идентификатор родительской активности
+          type: string
+          maxLength: 32
+          pattern: ^.*$
+        parentEntityType:
+          $ref: "#/components/schemas/TaskParentEntityType"
+        initiator:
+          $ref: "#/components/schemas/EmployeeNumberProp"
+        executor:
+          $ref: "#/components/schemas/EmployeeNumberProp"
+        type:
+          $ref: "#/components/schemas/TaskType"
+        description:
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+          description: Описание
+        result:
+          $ref: "#/components/schemas/TaskResult"
+        statusState:
+          $ref: "#/components/schemas/TaskStatusState"
+        priority:
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+          description: Приоритет задачи
+        refusalReason:
+          $ref: "#/components/schemas/TaskRefusalReason"
+        commentResult:
+          type: string
+          maxLength: 2000
+          pattern: ^.*$
+          description: Комментарий к результату
+        channel:
+          $ref: "#/components/schemas/TaskChannel"
+        source:
+          $ref: "#/components/schemas/TaskSource"
+        offerStartDate:
+          description: Дата начала действия
+          type: string
+          format: date-time
+        offerEndDate:
+          description: Дата окончания действия
+          type: string
+          format: date-time
+        clmPresentations:
+          type: array
+          description: Результаты CLM презентаций
+          maxItems: 20
+          items:
+            $ref: "#/components/schemas/CLMPresentations"
+        productConditions:
+          $ref: "#/components/schemas/ProductConditions"
+        recommendation:
+          type: boolean
+          description: Признак рекомендации
+      additionalProperties: false
+    TaskIdProp:
+      description: ID задачи
+      type: string
+      maxLength: 32
+      pattern: ^.*$
+    TaskParentEntityType:
+      type: object
+      required:
+        - code
+        - name
+      properties:
+        code:
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+          description: Код типа родительской сущности
+        name:
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+          description: Значение типа родительской сущности
+      additionalProperties: false
+    EmployeeNumberProp:
+      maxLength: 20
+      pattern: ^[0-9]+$
+      type: string
+      description: Табельный номер сотрудника
+    TaskType:
+      type: object
+      required:
+        - code
+        - name
+      properties:
+        code:
+          $ref: "#/components/schemas/TaskTypeCodeProp"
+        name:
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+          description: Значение типа задач
+      additionalProperties: false
+    TaskTypeCodeProp:
+      type: string
+      maxLength: 50
+      pattern: ^.*$
+      description: Код типа задач
+      example: 1-YUI84
+    TaskResult:
+      type: object
+      description: Это не результат, а фронтальный статус
+      required:
+        - code
+        - name
+      properties:
+        code:
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+          description: Код фронтального статуса
+        name:
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+          description: Значение фронтального статуса
+      additionalProperties: false
+    TaskStatusState:
+      type: object
+      required:
+        - code
+        - name
+      properties:
+        code:
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+          description: Код состояния статуса
+        name:
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+          description: Значение состояния статуса
+      additionalProperties: false
+    TaskRefusalReason:
+      type: object
+      required:
+        - code
+        - name
+      properties:
+        code:
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+          description: Код результата
+        name:
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+          description: Значение результата
+      additionalProperties: false
+    TaskChannel:
+      type: object
+      required:
+        - code
+        - name
+      properties:
+        code:
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+          description: Код канала поступления
+        name:
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+          description: Значение канала поступления
+      additionalProperties: false
+    TaskSource:
+      type: object
+      required:
+        - code
+        - name
+      properties:
+        code:
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+          description: Код источника поступления
+        name:
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+          description: Значение источника поступления
+      additionalProperties: false
+    CLMPresentations:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+          description: ID презентации
+        finalized:
+          type: boolean
+          description: Признак завершения
+      additionalProperties: false
+    ProductConditions:
+      type: object
+      description: Продуктовые параметры
+      properties:
+        productCode:
+          $ref: "#/components/schemas/ProductCodeProp"
+        productName:
+          description: Наименование продукта
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        productGroupID:
+          $ref: "#/components/schemas/ProductGroupIdProp"
+        productGroupName:
+          description: Название продуктовой группы
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        potential:
+          description: Потенциал
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        ufp:
+          description: Условный фокусный продукт
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        ukp:
+          description: Условный кредитный продукт
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        probability:
+          description: Вероятность
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        value:
+          description: Доходность
+          type: number
+          format: bigDecimal(15,2)
+          maximum: 4503599627370496
+          minimum: -4503599627370497
+      additionalProperties: false
+    ProductCodeProp:
+      description: Код продукта
+      type: string
+      maxLength: 50
+      pattern: ^.*$
+      example: 1-YUI84ER
+    ProductGroupIdProp:
+      description: Код группы продуктов
+      type: string
+      maxLength: 50
+      pattern: ^.*$
+      example: 1-YUI854
+    MeetingParticipant:
+      type: object
+      description: Участник встречи
+      required:
+        - employeeNumber
+        - activityTaskRole
+      properties:
+        employeeNumber:
+          $ref: "#/components/schemas/EmployeeNumberProp"
+        activityTaskRole:
+          $ref: "#/components/schemas/ActivityMeetingRole"
+      additionalProperties: false
+    ActivityMeetingRole:
+      type: object
+      description: Роль участника встречи/ задачи
+      properties:
+        code:
+          description: Код роли участника
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+        name:
+          description: Наименование роли участника
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+      additionalProperties: false
+    MeetingAddressInfo:
+      description: Информация об адресе встречи
+      type: object
+      additionalProperties: false
+      required:
+        - locationPlanType
+      properties:
+        locationPlan:
+          $ref: "#/components/schemas/MeetingLocationPlanProp"
+        locationPlanType:
+          $ref: "#/components/schemas/MeetingLocationPlanTypeProp"
+        locationPlanLatitude:
+          $ref: "#/components/schemas/MeetingLocationPlanLatitudeProp"
+        locationPlanLongitude:
+          $ref: "#/components/schemas/MeetingLocationPlanLongitudeProp"
+        locationFact:
+          description: Фактический адрес встречи
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        locationFactType:
+          description: Тип фактического адреса встречи
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+        locationFactLatitude:
+          description: Широта фактического адреса встречи
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+        locationFactLongitude:
+          description: Долгота фактического адреса встречи
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+    MeetingComment:
+      description: Комментарий к встрече
+      type: object
+      additionalProperties: false
+      required:
+        - commentId
+        - author
+        - creationTime
+        - comment
+      properties:
+        commentId:
+          $ref: "#/components/schemas/MeetingCommentIdProp"
+        author:
+          $ref: "#/components/schemas/EmployeeNumberProp"
+        creationTime:
+          description: Дата создания комментария
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        updateTime:
+          description: Дата изменения комментария
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        comment:
+          $ref: "#/components/schemas/MeetingCommentProp"
+    MeetingCommentIdProp:
+      description: Уникальный идентификатор комментария к Встрече
+      type: string
+      maxLength: 32
+      pattern: ^.*$
+    MeetingCommentProp:
+      description: Текст комментария к встрече
+      type: string
+      maxLength: 2000
+      pattern: ^.*$
+    MeetingBase:
+      description: Базовый набор элементов сущности встреча
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - executor
+        - organizationId
+        - statusState
+        - status
+      properties:
+        id:
+          $ref: "#/components/schemas/MeetingIdProp"
+        executor:
+          $ref: "#/components/schemas/EmployeeNumberProp"
+        organizationId:
+          $ref: "#/components/schemas/OrganizationIdProp"
+        statusState:
+          $ref: "#/components/schemas/MeetingStatusState"
+        status:
+          $ref: "#/components/schemas/MeetingStatus"
+        priority:
+          $ref: "#/components/schemas/MeetingPriority"
+        result:
+          $ref: "#/components/schemas/MeetingResult"
+        planEndDate:
+          description: Плановая дата окончания встречи
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        clndrPlanEndDate:
+          description: Плановая дата окончания по календарю исполнителя
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+    MeetingIdProp:
+      description: Уникальный идентификатор встречи
+      type: string
+      maxLength: 32
+      pattern: ^.*$
+    MeetingStatusState:
+      type: object
+      description: Статус встречи
+      additionalProperties: false
+      required:
+        - code
+        - name
+      properties:
+        code:
+          $ref: "#/components/schemas/MeetingStatusStateCodeProp"
+        name:
+          description: Наименование состояния статуса встречи
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+    MeetingStatusStateCodeProp:
+      description: Код состояния статуса встречи
+      type: string
+      maxLength: 50
+      pattern: ^.*$
+    MeetingStatus:
+      type: object
+      description: Статус встречи
+      additionalProperties: false
+      required:
+        - code
+        - name
+      properties:
+        code:
+          $ref: "#/components/schemas/MeetingStatusCodeProp"
+        name:
+          description: Наименование статуса встречи
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+    MeetingStatusCodeProp:
+      description: Код статуса встречи
+      type: string
+      maxLength: 50
+      pattern: ^.*$
+    MeetingPriority:
+      type: object
+      description: Приоритет встречи/ задачи
+      additionalProperties: false
+      required:
+        - code
+        - name
+      properties:
+        code:
+          description: Код приоритета
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+        name:
+          description: Наименование приоритета
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+    MeetingResult:
+      type: object
+      description: Результат отработки активности/ задачи
+      additionalProperties: false
+      required:
+        - code
+        - name
+      properties:
+        code:
+          description: Код результата
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+        name:
+          description: Наименование результата
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+    UniversalRs:
+      type: object
+      description: Объект ответа
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+          description: Признак успешности запроса
+        messages:
+          type: array
+          maxItems: 20
+          description: Массив оповещений
+          items:
+            $ref: "#/components/schemas/Message"
+        error:
+          $ref: "#/components/schemas/Error"
+      additionalProperties: false
+    Message:
+      type: object
+      description: Объект оповещения
+      properties:
+        title:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Заголовок оповещения
+        entityType:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Тип сущности
+        entityId:
+          maxLength: 50
+          pattern: ^.*$
+          type: string
+          description: Id сущности
+        message:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Текст сообщения/ ошибки
+        extSystem:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Смежная система
+        service:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Сервис инфраструктуры Фокус
+      additionalProperties: false
+    Error:
+      type: object
+      description: Объект ошибки
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код ошибки
+        title:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Заголовок ошибки ошибки
+        message:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Текст ошибки
+        extSystem:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Смежная система
+        service:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Сервис инфраструктуры Фокус
+      additionalProperties: false
+    MeetingsIdActionsChangeAddressRq:
+      type: object
+      description: Объект запроса редактирования адреса встречи
+      required:
+        - locationPlanType
+        - locationPlan
+      additionalProperties: false
+      properties:
+        locationPlanType:
+          $ref: "#/components/schemas/MeetingLocationPlanTypeProp"
+        locationPlan:
+          $ref: "#/components/schemas/MeetingLocationPlanProp"
+        locationPlanLatitude:
+          $ref: "#/components/schemas/MeetingLocationPlanLatitudeProp"
+        locationPlanLongitude:
+          $ref: "#/components/schemas/MeetingLocationPlanLongitudeProp"
+    MeetingsIdActionsChangeAddressRs:
+      type: object
+      description: Объект ответа редактирования адреса встречи
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/Meeting"
+      additionalProperties: false
+    MeetingsIdActionsChangeDateRq:
+      type: object
+      description: Объект запроса редактирования даты и времени встречи
+      required:
+        - planDate
+      additionalProperties: false
+      properties:
+        planExact:
+          $ref: "#/components/schemas/MeetingPlanExactProp"
+        planDate:
+          $ref: "#/components/schemas/MeetingPlanDateProp"
+        planTime:
+          $ref: "#/components/schemas/MeetingPlanTimeProp"
+        planDuration:
+          $ref: "#/components/schemas/MeetingPlanDurationProp"
+    MeetingsIdActionsChangeDateRs:
+      type: object
+      description: Объект ответа редактирования даты и времени встречи
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/Meeting"
+      additionalProperties: false
+    MeetingsIdActionsChangeRepresentativeRq:
+      type: object
+      description: Объект запроса редактирования представителя во встрече
+      required:
+        - representativeId
+      additionalProperties: false
+      properties:
+        representativeId:
+          $ref: "#/components/schemas/RepresentativeIdProp"
+    MeetingsIdActionsChangeRepresentativeRs:
+      type: object
+      description: Объект ответа редактирования встречи
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/Meeting"
+      additionalProperties: false
+    MeetingsIdActionsCreateCommentRq:
+      type: object
+      description: Объект запроса создания встречи
+      additionalProperties: false
+      required:
+        - comment
+      properties:
+        comment:
+          $ref: "#/components/schemas/MeetingCommentProp"
+    MeetingsIdActionsCreateCommentRs:
+      type: object
+      description: Объект ответа создания встречи
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/Meeting"
+      additionalProperties: false
+    TasksCreateRq:
+      type: object
+      required:
+        - typeCode
+        - organizationId
+      properties:
+        organizationId:
+          $ref: "#/components/schemas/OrganizationIdProp"
+        typeCode:
+          $ref: "#/components/schemas/TaskTypeCodeProp"
+        productCodes:
+          description: Коды продуктов
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/ProductCodeProp"
+        productGroupIds:
+          description: Коды групп продуктов
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/ProductGroupIdProp"
+      additionalProperties: false
+    TasksCreateRs:
+      type: object
+      description: Объект ответа создания задачи
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/Meeting"
+      additionalProperties: false
+    TasksIdActionsDeleteRq:
+      type: object
+      properties:
+        typeCode:
+          $ref: "#/components/schemas/TaskTypeCodeProp"
+        organizationId:
+          $ref: "#/components/schemas/OrganizationIdProp"
+      additionalProperties: false
+    TasksIdActionsDeleteRs:
+      type: object
+      description: Объект ответа удаления задачи
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/Meeting"
+      additionalProperties: false
+    MeetingsIdActionsEditCommentRq:
+      type: object
+      description: Объект запроса редактирования комментария к встрече
+      additionalProperties: false
+      required:
+        - comment
+      properties:
+        comment:
+          $ref: "#/components/schemas/MeetingCommentProp"
+    MeetingsIdActionsEditCommentRs:
+      type: object
+      description: Объект ответа редактирования комментария к встрече
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/Meeting"
+      additionalProperties: false
+    MeetingsIdActionsPlanningRq:
+      type: object
+      description: Объект запроса планирования встречи
+      required:
+        - planDate
+      additionalProperties: false
+      properties:
+        representativeId:
+          $ref: "#/components/schemas/RepresentativeIdProp"
+        locationPlanType:
+          $ref: "#/components/schemas/MeetingLocationPlanTypeProp"
+        locationPlan:
+          $ref: "#/components/schemas/MeetingLocationPlanProp"
+        locationPlanLatitude:
+          $ref: "#/components/schemas/MeetingLocationPlanLatitudeProp"
+        locationPlanLongitude:
+          $ref: "#/components/schemas/MeetingLocationPlanLongitudeProp"
+        planExact:
+          $ref: "#/components/schemas/MeetingPlanExactProp"
+        planDate:
+          $ref: "#/components/schemas/MeetingPlanDateProp"
+        planTime:
+          $ref: "#/components/schemas/MeetingPlanTimeProp"
+        planDuration:
+          $ref: "#/components/schemas/MeetingPlanDurationProp"
+    MeetingsIdActionsPlanningRs:
+      type: object
+      description: Объект ответа планирования встречи
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/Meeting"
+      additionalProperties: false
+    MeetingsIdListOfCommentsRs:
+      type: object
+      description: Объект получения списка комментариев по ID встречи
+      additionalProperties: false
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          type: array
+          maxItems: 30
+          description: Массив комментариев к встрече
+          items:
+            $ref: "#/components/schemas/MeetingCommentDetail"
+    MeetingCommentDetail:
+      description: Расширенный комментарий к встрече
+      type: object
+      additionalProperties: false
+      required:
+        - commentId
+        - authorInfo
+        - creationTime
+        - comment
+        - canBeEdited
+      properties:
+        commentId:
+          $ref: "#/components/schemas/MeetingCommentIdProp"
+        creationTime:
+          description: Дата создания комментария
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        updateTime:
+          description: Дата изменения комментария
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        comment:
+          $ref: "#/components/schemas/MeetingCommentProp"
+        canBeEdited:
+          description: Признак возможности редактирования комментария
+          type: boolean
+        authorInfo:
+          $ref: "#/components/schemas/EmployeeProfile"
+    EmployeeProfile:
+      type: object
+      description: Профиль сотрудника
+      required:
+        - employeeNumber
+        - roles
+        - name
+        - surname
+      properties:
+        login:
+          description: Логин
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        surname:
+          description: Фамилия
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        name:
+          description: Имя
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        patronymic:
+          description: Отчество
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        birthdate:
+          description: День рождения
+          type: string
+          maxLength: 255
+          format: date-time
+        employeeNumber:
+          $ref: "#/components/schemas/EmployeeNumberProp"
+        position:
+          $ref: "#/components/schemas/EmployeePosition"
+        roles:
+          type: array
+          maxItems: 255
+          items:
+            $ref: "#/components/schemas/Role"
+        phones:
+          type: array
+          maxItems: 30
+          items:
+            $ref: "#/components/schemas/EmployeePhone"
+        emails:
+          type: array
+          maxItems: 255
+          items:
+            $ref: "#/components/schemas/EmployeeEmail"
+        subdivision:
+          $ref: "#/components/schemas/Subdivision"
+        newcomerTag:
+          description: Признак новичка
+          type: boolean
+        firedTag:
+          description: Признак уволенного сотрудника
+          type: boolean
+        newcomerDate:
+          description: Дата вступления в должность
+          type: string
+          maxLength: 255
+          format: date-time
+        moveDate:
+          description: Дата перевода на другую должность
+          type: string
+          maxLength: 255
+          format: date-time
+        firedDate:
+          description: Дата увольнения сотрудника
+          type: string
+          maxLength: 255
+          format: date-time
+        absenceTag:
+          description: Признак отсутствия сотрудника
+          type: boolean
+        absenceInfo:
+          $ref: "#/components/schemas/AbsenceInfo"
+        functChiefNumber:
+          $ref: "#/components/schemas/EmployeeNumberProp"
+        remoteWorkTag:
+          description: Признак удаленной работы
+          type: boolean
+        substitutions:
+          description: Замещения
+          type: array
+          maxItems: 255
+          items:
+            $ref: "#/components/schemas/Substitution"
+      additionalProperties: false
+    EmployeePosition:
+      description: Должность
+      type: object
+      required:
+        - id
+        - code
+        - name
+        - beginDate
+      properties:
+        id:
+          description: Идентификатор должности
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        code:
+          description: Код должности
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        name:
+          description: Наименование
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        beginDate:
+          description: Дата начала
+          type: string
+          maxLength: 255
+          format: date-time
+        endDate:
+          description: Дата окончания
+          type: string
+          maxLength: 255
+          format: date-time
+      additionalProperties: false
+    Role:
+      type: object
+      description: Роль сотрудника
+      required:
+        - fullName
+        - code
+        - shortName
+        - mainFlag
+      properties:
+        fullName:
+          description: Наименование роли
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        code:
+          $ref: "#/components/schemas/RoleCodeProp"
+        shortName:
+          description: Краткое наименование роли
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        mainFlag:
+          description: Признак основной
+          type: boolean
+      additionalProperties: false
+    RoleCodeProp:
+      description: Код роли
+      type: string
+      maxLength: 1000
+      pattern: ^.*$
+      enum:
+        - TMPP
+        - MKK
+        - KM
+        - KM_RB
+        - RTP_MKK
+    EmployeePhone:
+      type: object
+      description: Телефон сотрудника
+      required:
+        - phone
+        - type
+      properties:
+        phone:
+          description: Телефон
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        type:
+          $ref: "#/components/schemas/PhoneType"
+        isFavorite:
+          description: Предпочтительный
+          type: boolean
+        isActive:
+          description: Активный
+          type: boolean
+        description:
+          description: Комментарий
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+      additionalProperties: false
+    PhoneType:
+      type: object
+      description: Тип телефона
+      required:
+        - code
+        - name
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    EmployeeEmail:
+      type: object
+      description: E-mail сотрудника
+      required:
+        - email
+        - type
+      properties:
+        email:
+          description: Email
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        type:
+          $ref: "#/components/schemas/EmailType"
+        isFavorite:
+          description: Предпочтительный
+          type: boolean
+        isActive:
+          description: Активный
+          type: boolean
+        description:
+          description: Комментарий
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+      additionalProperties: false
+    EmailType:
+      type: object
+      description: Тип электронного адреса
+      required:
+        - code
+        - name
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    Subdivision:
+      description: Подразделение
+      type: object
+      properties:
+        code:
+          description: Бизнес-код подразделения
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        fullName:
+          description: Наименование подразделения
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        headId:
+          description: ID вышестоящего подразделения
+          type: number
+          maximum: 4503599627370496
+          minimum: -4503599627370497
+        structChiefNumber:
+          $ref: "#/components/schemas/EmployeeNumberProp"
+        address:
+          $ref: "#/components/schemas/SubdivisionAddress"
+      additionalProperties: false
+    SubdivisionAddress:
+      description: Адрес
+      type: object
+      properties:
+        id:
+          description: Уникальный идентификатор
+          type: string
+          maxLength: 50
+          pattern: ^[0-9]+$
+        fullAddress:
+          description: Адрес
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        type:
+          $ref: "#/components/schemas/AddressType"
+        mainFlag:
+          description: Признак основного
+          type: boolean
+      additionalProperties: false
+    AddressType:
+      type: object
+      description: Тип адреса
+      required:
+        - code
+        - name
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    AbsenceInfo:
+      description: Контейнер записей об отсутствии
+      type: object
+      properties:
+        type:
+          description: Тип отсутствия
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        startDate:
+          description: Дата начала отсутствия
+          type: string
+          maxLength: 255
+          format: date-time
+        endDate:
+          description: Дата окончания отсутствия
+          type: string
+          maxLength: 255
+          format: date-time
+      additionalProperties: false
+    Substitution:
+      type: object
+      required:
+        - id
+        - deputyEmployeeNumber
+        - replacementEmployeeNumber
+        - replacementRole
+        - startDate
+        - endDate
+      properties:
+        id:
+          description: Уникальный идентификатор
+          type: string
+          maxLength: 50
+          pattern: ^[0-9]+$
+        deputyEmployeeNumber:
+          $ref: "#/components/schemas/EmployeeNumberProp"
+        replacementEmployeeNumber:
+          $ref: "#/components/schemas/EmployeeNumberProp"
+        replacementRole:
+          $ref: "#/components/schemas/ReplacementRole"
+        startDate:
+          description: Дата начала замещения
+          type: string
+          maxLength: 255
+          format: date-time
+        endDate:
+          description: Дата окончания замещения
+          type: string
+          maxLength: 255
+          format: date-time
+        status:
+          description: Статус замещения
+          type: boolean
+      additionalProperties: false
+    ReplacementRole:
+      description: Роль замещаемого
+      type: object
+      properties:
+        fullName:
+          description: Наименование роли
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        code:
+          description: Код роли
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        shortName:
+          description: Краткое наименование роли
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+      additionalProperties: false
+    MeetingsIdRs:
+      type: object
+      description: Объект ответа получения деталки встречи по id
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/Meeting"
+      additionalProperties: false
+    MeetingsRq:
+      type: object
+      description: Объект запроса списка деталок встреч
+      additionalProperties: false
+      required:
+        - statusStates
+        - paging
+        - sorting
+      properties:
+        ids:
+          description: Коллекция Идентификаторов встреч
+          type: array
+          maxItems: 255
+          items:
+            $ref: "#/components/schemas/MeetingIdProp"
+        executors:
+          description: Коллекция Табельных номеров исполнителя по встрече
+          type: array
+          maxItems: 10
+          items:
+            $ref: "#/components/schemas/EmployeeNumberProp"
+        organizationIds:
+          description: Коллекция Идентификаторов организаций
+          type: array
+          maxItems: 255
+          items:
+            $ref: "#/components/schemas/OrganizationIdProp"
+        statusStates:
+          description: Коллекция состояний статусов встреч
+          type: array
+          maxItems: 5
+          items:
+            $ref: "#/components/schemas/MeetingStatusStateCodeProp"
+        statuses:
+          description: Коллекция статусов встреч
+          type: array
+          maxItems: 10
+          items:
+            $ref: "#/components/schemas/MeetingStatusCodeProp"
+        planStartDateFrom:
+          description: Начало диапазона плановой даты начала встречи
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        planStartDateTo:
+          description: Окончание диапазона плановой даты начала встречи
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        planEndDateFrom:
+          description: Начало диапазона плановой даты окончания встречи
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        planEndDateTo:
+          description: Окончание диапазона плановой даты окончания встречи
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        factStartDateFrom:
+          description: Начало диапазона фактической даты начала встречи
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        factStartDateTo:
+          description: Окончание диапазона фактической даты начала встречи
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        factEndDateFrom:
+          description: Начало диапазона фактической даты окончания встречи
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        factEndDateTo:
+          description: Окончание диапазона фактической даты окончания встречи
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        clndrPlanStartDateFrom:
+          description: Начало диапазона плановой даты начала встречи по календарю
+            исполнителя
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        clndrPlanStartDateTo:
+          description: Окончание диапазона плановой даты начала встречи по календарю
+            исполнителя
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        clndrPlanEndDateFrom:
+          description: Начало диапазона плановой даты окончания встречи по календарю
+            исполнителя
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        clndrPlanEndDateTo:
+          description: Окончание диапазона плановой даты окончания встречи по календарю
+            исполнителя
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?$
+        paging:
+          $ref: "#/components/schemas/PagingRq"
+        sorting:
+          type: array
+          maxItems: 5
+          description: Массив параметров сортировки
+          items:
+            $ref: "#/components/schemas/MeetingSorter"
+    PagingRq:
+      type: object
+      description: Объект запроса пагинации
+      required:
+        - pageNumber
+        - numberOfElements
+      properties:
+        pageNumber:
+          maximum: 2147483647
+          minimum: 0
+          type: number
+          description: Номер запрашиваемой страницы
+        numberOfElements:
+          maximum: 2147483647
+          minimum: 0
+          type: number
+          description: Количество записей на странице
+      additionalProperties: false
+    MeetingSorter:
+      type: object
+      description: Объект сортироки
+      properties:
+        key:
+          $ref: "#/components/schemas/MeetingSorterKey"
+        order:
+          $ref: "#/components/schemas/MeetingSorterOrder"
+      additionalProperties: false
+    MeetingSorterKey:
+      maxLength: 100
+      pattern: ^.*$
+      type: string
+      description: Ключ сортировки
+      enum:
+        - executor
+        - clndrPlanStartDate
+    MeetingSorterOrder:
+      maxLength: 10
+      pattern: ^.*$
+      type: string
+      description: Порядок сортировки
+      enum:
+        - DESC
+        - ASC
+    MeetingsRs:
+      type: object
+      description: Объект ответа получения списка деталок встреч по id
+      additionalProperties: false
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        paging:
+          $ref: "#/components/schemas/PagingPPKRs"
+        data:
+          type: array
+          maxItems: 255
+          description: Массив карточек детальной информации по встречам
+          items:
+            $ref: "#/components/schemas/Meeting"
+    PagingPPKRs:
+      type: object
+      description: Объект ответа пагинации ППК
+      allOf:
+        - $ref: "#/components/schemas/PagingRs"
+      properties:
+        requestId:
+          description: Уникальный идентификатор инициирующего запроса. Используется для
+            постраничного запроса данных из ППРБ.ППК
+          type: string
+          pattern: ^.*$
+          maxLength: 255
+      additionalProperties: false
+    PagingRs:
+      type: object
+      description: Объект ответа пагинации
+      properties:
+        sorted:
+          description: Признак отсортированной коллекции
+          type: boolean
+        offset:
+          description: Сдвиг выборки
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        totalElements:
+          maximum: 2147483647
+          minimum: 0
+          type: number
+          description: Всего количество записей по запроса
+        pageNumber:
+          maximum: 2147483647
+          minimum: 0
+          type: number
+          description: Текущая страница
+        numberOfElements:
+          maximum: 2147483647
+          minimum: 0
+          type: number
+          description: Количество записей на странице
+        last:
+          description: Признак последней страницы
+          type: boolean
+      additionalProperties: false
+    ChecklistChapterRq:
+      type: object
+      additionalProperties: false
+      description: передача данных на BH, для наполнения таблицы
+      properties:
+        name:
+          $ref: "#/components/schemas/ChecklistChapterNameProp"
+    ChecklistChapterNameProp:
+      description: наименование раздела
+      type: string
+      maxLength: 1000
+      pattern: ^.*$
+    ChecklistChapterRs:
+      type: object
+      additionalProperties: false
+      description: Объект ответа об успешности передачи данных на BH, для наполнения таблицы
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/ChecklistChapter"
+    ChecklistChapter:
+      type: object
+      additionalProperties: false
+      description: Разделы чек-листа
+      required:
+        - chapterId
+        - name
+      properties:
+        chapterId:
+          description: идентификатор раздела Чек-листа
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        name:
+          $ref: "#/components/schemas/ChecklistChapterNameProp"
+        comments:
+          description: комментарии
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+    ChecklistQuestionRq:
+      type: object
+      additionalProperties: false
+      description: передача данных на BH, для наполнения таблицы
+      properties:
+        text:
+          $ref: "#/components/schemas/ChecklistQuestionTextProp"
+        answer:
+          $ref: "#/components/schemas/TemplateAnswer"
+    ChecklistQuestionTextProp:
+      description: текст вопроса
+      type: string
+      maxLength: 1000
+      pattern: ^.*$
+    TemplateAnswer:
+      description: Ответ
+      type: object
+      additionalProperties: false
+      required:
+        - typeAnswer
+        - recommendationId
+      maxProperties: 255
+      properties:
+        typeAnswer:
+          description: тип ответа/схема
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        typeAnswerYesNo:
+          description: тип ответа/схема YesNo - свичер?
+          type: boolean
+        typeAnswerFreeForm:
+          description: тип ответа free_form
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+        typeAnswerSelect:
+          description: тип ответа select
+          type: array
+          maxItems: 255
+          items:
+            $ref: "#/components/schemas/ChecklistAnswerTextProp"
+        deviations:
+          description: отклонения
+          type: boolean
+        recommendationId:
+          description: Идентификатор рекомендаций
+          type: array
+          maxItems: 255
+          items:
+            $ref: "#/components/schemas/ChecklistAnswerRecommendationProp"
+    ChecklistAnswerTextProp:
+      description: текст ответа, перечисление через запятую
+      type: string
+      maxLength: 1000
+      pattern: ^.*$
+    ChecklistAnswerRecommendationProp:
+      description: Идентификатор рекомендаций
+      type: integer
+      maximum: 2147483647
+      minimum: 1
+    ChecklistQuestionRs:
+      type: object
+      additionalProperties: false
+      description: Объект ответа об успешности передачи данных на BH, для наполнения таблицы
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/ChecklistQuestion"
+    ChecklistQuestion:
+      type: object
+      additionalProperties: false
+      description: Вопросы Чек-листа
+      required:
+        - questionId
+        - text
+        - answer
+      properties:
+        questionId:
+          description: идентификатор вопроса
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          pattern: ^.*$
+        text:
+          $ref: "#/components/schemas/ChecklistQuestionTextProp"
+        answer:
+          $ref: "#/components/schemas/TemplateAnswer"
+        comments:
+          description: комментарии
+          type: string
+          maxLength: 1000
+          pattern: ^.*$
+    ChecklistRecommendationRq:
+      type: object
+      additionalProperties: false
+      description: передача данных на BH, для наполнения таблицы
+      properties:
+        text:
+          $ref: "#/components/schemas/ChecklistRecommendationTextProp"
+        order:
+          $ref: "#/components/schemas/ChecklistRecommendationOrderProp"
+    ChecklistRecommendationTextProp:
+      description: текст рекомендации
+      type: string
+      maxLength: 1000
+      pattern: ^.*$
+    ChecklistRecommendationOrderProp:
+      description: Порядковый номер рекомендации
+      type: integer
+      maximum: 2147483647
+      minimum: 0
+    ChecklistRecommendationRs:
+      type: object
+      additionalProperties: false
+      description: Объект ответа об успешности передачи данных на BH, для наполнения таблицы
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+    CommunicationClickToCallRq:
+      type: object
+      description: Объект запроса на звонок через Единый номер (Click-to-Call)
+      additionalProperties: false
+      required:
+        - inn
+        - kpp
+        - clientPhone
+        - managerPhone
+      properties:
+        inn:
+          maxLength: 50
+          pattern: ^[0-9]+$
+          type: string
+          description: Индивидуальный Налоговый Номер Клиента (Резидента)
+        kpp:
+          maxLength: 16
+          pattern: ^[0-9]+$
+          type: string
+          description: Код Причины Постановки на учет
+        clientPhone:
+          description: Номер телефона представителя клиента
+          type: string
+          maxLength: 18
+          pattern: ^.*$
+        managerPhone:
+          description: Номер телефона менеджера (сотрудника банка)
+          type: string
+          maxLength: 18
+          pattern: ^.*$
+    CommunicationClickToCallRs:
+      type: object
+      description: Объект ответа на запрос звонка на Единый номер (Click-to-Call)
+      additionalProperties: false
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+    AuthRs:
+      type: object
+      description: Формат ответа авторизации
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/EmployeeProfile"
+      additionalProperties: false
+    SupRq:
+      type: array
+      maxItems: 255
+      description: Массив наименований СУП-параметров
+      items:
+        $ref: "#/components/schemas/SupNameProp"
+    SupNameProp:
+      description: Название СУП-а
+      type: string
+      minLength: 1
+      maxLength: 200
+      pattern: ^.*$
+    SupRs:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          type: array
+          maxItems: 255
+          description: Массив суп-ов
+          items:
+            $ref: "#/components/schemas/Sup"
+      additionalProperties: false
+    Sup:
+      type: object
+      description: Значение СУП-а
+      required:
+        - name
+        - type
+      properties:
+        name:
+          $ref: "#/components/schemas/SupNameProp"
+        type:
+          $ref: "#/components/schemas/SupTypeProp"
+        values:
+          type: array
+          maxItems: 255
+          description: Перечень значений СУП-а
+          items:
+            $ref: "#/components/schemas/SupValueProp"
+      additionalProperties: false
+    SupTypeProp:
+      description: Тип СУП-а
+      type: string
+      pattern: ^.*$
+      minLength: 1
+      maxLength: 200
+    SupValueProp:
+      type: string
+      description: Значение СУП-а
+      pattern: ^.*$
+      maxLength: 4000
+    MobileLogRq:
+      type: array
+      minLength: 1
+      maxItems: 255
+      description: Массив записей с логами
+      items:
+        $ref: "#/components/schemas/MobileLog"
+    MobileLog:
+      type: object
+      description: Мобильные логи
+      required:
+        - level
+        - data
+      properties:
+        level:
+          $ref: "#/components/schemas/MobileLogLevel"
+        key:
+          description: Название шаблона данных для атрибута data
+          type: string
+          pattern: ^.*$
+          maxLength: 20
+        data:
+          $ref: "#/components/schemas/MobileLogData"
+      additionalProperties: false
+    MobileLogLevel:
+      description: Уровень логирования
+      type: string
+      maxLength: 6
+      enum:
+        - INFO
+        - WARN
+        - DEBUG
+        - ERROR
+    MobileLogData:
+      description: Данные лога
+      type: object
+      required:
+        - type
+        - date
+        - uuid
+        - app
+        - device
+        - os
+      properties:
+        type:
+          description: Тип логирования
+          type: string
+          maxLength: 10
+          pattern: ^.*$
+        date:
+          description: Дата и время события на PL
+          type: string
+          maxLength: 30
+          pattern: ^.*$
+        uuid:
+          description: ID лога
+          type: string
+          maxLength: 30
+          pattern: ^.*$
+        app:
+          description: Версия приложения
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+        device:
+          description: Наименование устройства
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+        os:
+          description: Версия ОС устройства
+          type: string
+          pattern: ^.*$
+          maxLength: 50
+        message:
+          description: Тело лога
+          type: string
+          pattern: ^.*$
+          maxLength: 20000
+        error:
+          description: Текст ошибки
+          type: string
+          pattern: ^.*$
+          maxLength: 300
+        trace:
+          description: Stack Trace ошибки
+          type: string
+          pattern: ^.*$
+          maxLength: 300
+        event:
+          description: Наименование события
+          type: string
+          pattern: ^.*$
+          maxLength: 50
+        url:
+          description: URL запроса
+          type: string
+          pattern: ^.*$
+          maxLength: 300
+        method:
+          description: Тип запроса
+          type: string
+          pattern: ^.*$
+          maxLength: 10
+        body:
+          description: Тело запроса
+          type: string
+          pattern: ^.*$
+          maxLength: 20000
+        response:
+          description: Тело ответа
+          type: string
+          pattern: ^.*$
+          maxLength: 20000
+        status:
+          description: Статус ответа
+          type: string
+          pattern: ^.*$
+          maxLength: 50
+      additionalProperties: false
+    MobileLogRs:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      additionalProperties: false
+    OrganizationsActiveProductsRq:
+      type: object
+      description: Объект запроса
+      properties:
+        products:
+          description: Коды продуктов
+          type: array
+          maxItems: 10
+          minItems: 0
+          items:
+            $ref: "#/components/schemas/ClientActiveProductCode"
+        paging:
+          $ref: "#/components/schemas/PagingPPKRq"
+      additionalProperties: false
+    ClientActiveProductCode:
+      description: Код продукта
+      type: string
+      maxLength: 255
+      pattern: ^.*$
+      enum:
+        - RKO
+        - CREDIT
+        - DEPOSIT
+        - INKASS
+        - DBO
+        - CASH_MANAGEMENT
+        - EDBO
+        - INVOICE
+        - ACQUIRING
+        - GENERAL_AGREEMENT
+        - PROVISION
+        - CORPORATE_CARD
+    PagingPPKRq:
+      type: object
+      description: Объект запроса пагинации ППК
+      required:
+        - requestId
+      properties:
+        pageNumber:
+          description: Номер запрашиваемой страницы
+          type: number
+          maximum: 2147483647
+          minimum: 0
+        requestId:
+          description: Уникальный идентификатор инициирующего запроса. Используется для
+            постраничного запроса данных из ППРБ.ППК
+          type: string
+          pattern: ^.*$
+          maxLength: 255
+      additionalProperties: false
+    OrganizationsActiveProductsRs:
+      type: object
+      description: Объект ответа запроса получения действующих продуктов
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        paging:
+          $ref: "#/components/schemas/PagingPPKRs"
+        data:
+          type: array
+          maxItems: 255
+          items:
+            $ref: "#/components/schemas/ClientActiveProduct"
+      additionalProperties: false
+    ClientActiveProduct:
+      description: БС Действующий продукт Клиента
+      type: object
+      required:
+        - organizationId
+        - name
+        - code
+      properties:
+        organizationId:
+          $ref: "#/components/schemas/OrganizationIdProp"
+        name:
+          description: Наименование действующего продукта
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        code:
+          $ref: "#/components/schemas/ClientActiveProductCode"
+        source:
+          description: Источник данных по продукту
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        additionalParams:
+          description: Дополнительные параметры продукта
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/ActiveProductAdditionalParam"
+      additionalProperties: false
+    ActiveProductAdditionalParam:
+      description: Дополнительный параметр действующего продукта Клиента
+      type: object
+      required:
+        - key
+        - value
+        - priority
+      properties:
+        key:
+          $ref: "#/components/schemas/ActiveProductAdditionalParamKey"
+        value:
+          description: Значение
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        priority:
+          description: Приоритет параметра
+          type: integer
+          maximum: 1000
+          minimum: 0
+      additionalProperties: false
+    ActiveProductAdditionalParamKey:
+      description: Ключ
+      type: string
+      maxLength: 255
+      pattern: ^.*$
+      enum:
+        - CURRENCY
+        - START_DATE
+        - END_PLAN_DATE
+        - AGREEM_SUM
+        - AGREEM_TERM
+        - TB
+        - PU_NAME
+        - LOAN_TYPE
+        - LOAN_SUM
+        - PERIOD
+        - CARD_TYPE
+        - PAYMENT_SYSTEM
+    OrganizationNotesCreateRq:
+      type: object
+      description: Объект запроса создания заметки
+      required:
+        - text
+      properties:
+        text:
+          $ref: "#/components/schemas/OrganizationNoteTextProp"
+      additionalProperties: false
+    OrganizationNoteTextProp:
+      type: string
+      description: Текст заметки
+      maxLength: 1000
+      pattern: ^.*$
+    OrganizationNotesCreateRs:
+      type: object
+      description: Объект ответа запроса создания заметки
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/OrganizationNote"
+      additionalProperties: false
+    OrganizationNote:
+      type: object
+      description: Заметки по Организации
+      required:
+        - id
+        - organizationId
+        - text
+      properties:
+        id:
+          $ref: "#/components/schemas/OrganizationNoteIdProp"
+        organizationId:
+          $ref: "#/components/schemas/OrganizationIdProp"
+        text:
+          $ref: "#/components/schemas/OrganizationNoteTextProp"
+        createdBy:
+          $ref: "#/components/schemas/EmployeeNumberProp"
+        created:
+          type: string
+          description: Дата создания заметки
+          format: date-time
+        updatedBy:
+          $ref: "#/components/schemas/EmployeeNumberProp"
+        updated:
+          type: string
+          description: Дата последнего обновления заметки
+          format: date-time
+      additionalProperties: false
+    OrganizationNoteIdProp:
+      type: string
+      description: Идентификатор Заметки
+      maxLength: 32
+      pattern: ^.*$
+    OrganizationNotesIdActionsDeleteRs:
+      type: object
+      description: Объект ответа запроса удаления заметки
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      additionalProperties: false
+    OrganizationNotesIdActionsEditRq:
+      type: object
+      description: Объект запроса редактирования заметки
+      required:
+        - text
+      properties:
+        text:
+          $ref: "#/components/schemas/OrganizationNoteTextProp"
+      additionalProperties: false
+    OrganizationNotesIdActionsEditRs:
+      type: object
+      description: Объект ответа запроса редактирования заметки
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/OrganizationNote"
+      additionalProperties: false
+    OrganizationNotesRs:
+      type: object
+      description: Объект ответа
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          type: array
+          maxItems: 100
+          description: Бизнес данные запроса
+          items:
+            $ref: "#/components/schemas/OrganizationNote"
+      additionalProperties: false
+    RepresentativesCreateRq:
+      type: object
+      description: Тело запроса на создание представителя
+      required:
+        - surname
+        - name
+        - primary
+        - phones
+      properties:
+        name:
+          $ref: "#/components/schemas/RepresentativeNameProp"
+        surname:
+          $ref: "#/components/schemas/RepresentativeSurnameProp"
+        patronymic:
+          $ref: "#/components/schemas/RepresentativePatronymicProp"
+        dateOfBirth:
+          $ref: "#/components/schemas/RepresentativeDateOfBirthProp"
+        position:
+          $ref: "#/components/schemas/RepresentativePosition"
+        primary:
+          $ref: "#/components/schemas/RepresentativePrimaryProp"
+        phones:
+          description: Телефоны Представителя
+          type: array
+          maxItems: 30
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/Phone"
+        emails:
+          description: Email Представителя
+          type: array
+          maxItems: 30
+          minItems: 0
+          items:
+            $ref: "#/components/schemas/Email"
+      additionalProperties: false
+    RepresentativeNameProp:
+      description: Имя представителя
+      type: string
+      maxLength: 255
+      pattern: ^.*$
+    RepresentativeSurnameProp:
+      description: Фамилия представителя
+      type: string
+      maxLength: 255
+      pattern: ^.*$
+    RepresentativePatronymicProp:
+      description: Отчество представителя
+      type: string
+      maxLength: 255
+      pattern: ^.*$
+    RepresentativeDateOfBirthProp:
+      description: Дата рождения Представителя. Формат - дата (требования SOWA)
+      type: string
+      pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+    RepresentativePosition:
+      type: object
+      description: Должность представителя
+      required:
+        - code
+        - name
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    RepresentativePrimaryProp:
+      description: Признак основого Представителя
+      type: boolean
+    Phone:
+      type: object
+      description: БС Телефон
+      required:
+        - number
+      properties:
+        id:
+          description: Уникальный идентификатор Телефона
+          maxLength: 50
+          pattern: ^[0-9]+$
+          type: string
+        number:
+          description: Номер телефона
+          type: string
+          maxLength: 250
+          pattern: ^.*$
+        additional:
+          description: Добавочный номер
+          type: string
+          maxLength: 50
+          pattern: ^.*$
+        type:
+          $ref: "#/components/schemas/PhoneType"
+        main:
+          description: Признак основного телефона
+          type: boolean
+        deletedReason:
+          $ref: "#/components/schemas/ContactDeletedReason"
+      additionalProperties: false
+    ContactDeletedReason:
+      type: object
+      description: Причина удаления телефона/электронного адреса
+      required:
+        - code
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    Email:
+      type: object
+      description: БС email
+      required:
+        - email
+      properties:
+        id:
+          description: Уникальный Идентификатор электронного адреса
+          type: string
+          maxLength: 50
+          pattern: ^[0-9]+$
+        email:
+          description: Электронный адрес
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        type:
+          $ref: "#/components/schemas/EmailType"
+        main:
+          description: Признак основного email
+          type: boolean
+        deletedReason:
+          $ref: "#/components/schemas/ContactDeletedReason"
+      additionalProperties: false
+    RepresentativesCreateRs:
+      type: object
+      description: Ответ на создание представителя
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/Representative"
+      additionalProperties: false
+    Representative:
+      type: object
+      description: БС Представитель
+      required:
+        - id
+        - name
+        - surname
+        - primary
+      properties:
+        id:
+          $ref: "#/components/schemas/RepresentativeIdProp"
+        name:
+          $ref: "#/components/schemas/RepresentativeNameProp"
+        surname:
+          $ref: "#/components/schemas/RepresentativeSurnameProp"
+        patronymic:
+          $ref: "#/components/schemas/RepresentativePatronymicProp"
+        dateOfBirth:
+          $ref: "#/components/schemas/RepresentativeDateOfBirthProp"
+        position:
+          $ref: "#/components/schemas/RepresentativePosition"
+        primary:
+          $ref: "#/components/schemas/RepresentativePrimaryProp"
+        phones:
+          description: Телефоны Представителя
+          type: array
+          maxItems: 30
+          items:
+            $ref: "#/components/schemas/Phone"
+        emails:
+          description: Телефоны Представителя
+          type: array
+          maxItems: 30
+          items:
+            $ref: "#/components/schemas/Email"
+        editable:
+          $ref: "#/components/schemas/RepresentativeEditableProp"
+      additionalProperties: false
+    RepresentativeEditableProp:
+      description: Признак "Возможно редактирование данных представителя"
+      type: boolean
+    RepresentativesIdActionsDeleteRs:
+      type: object
+      description: Ответ на удаление представителя
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      additionalProperties: false
+    RepresentativesIdActionsUpdateRq:
+      type: object
+      description: Тело запроса на обновление представителя
+      properties:
+        name:
+          $ref: "#/components/schemas/RepresentativeNameProp"
+        surname:
+          $ref: "#/components/schemas/RepresentativeSurnameProp"
+        patronymic:
+          $ref: "#/components/schemas/RepresentativePatronymicProp"
+        dateOfBirth:
+          $ref: "#/components/schemas/RepresentativeDateOfBirthProp"
+        position:
+          $ref: "#/components/schemas/RepresentativePosition"
+        primary:
+          $ref: "#/components/schemas/RepresentativePrimaryProp"
+        phones:
+          description: Телефоны Представителя
+          type: array
+          maxItems: 30
+          minItems: 0
+          items:
+            $ref: "#/components/schemas/Phone"
+        emails:
+          description: Email Представителя
+          type: array
+          maxItems: 30
+          minItems: 0
+          items:
+            $ref: "#/components/schemas/Email"
+      additionalProperties: false
+    RepresentativesIdActionsUpdateRs:
+      type: object
+      description: Ответ на обновление представителя
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/Representative"
+      additionalProperties: false
+    RepresentativesIdRs:
+      type: object
+      description: Ответ на получение представителя
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/Representative"
+      additionalProperties: false
+    OrganizationsIdRs:
+      type: object
+      description: Объект ответа
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        data:
+          $ref: "#/components/schemas/Organization"
+      additionalProperties: false
+    Organization:
+      type: object
+      description: БС Организация
+      allOf:
+        - $ref: "#/components/schemas/OrganizationBase"
+      properties:
+        websites:
+          description: Сайты Организации
+          type: array
+          maxItems: 30
+          items:
+            type: string
+            pattern: ^.*$
+            maxLength: 255
+        representatives:
+          type: array
+          maxItems: 30
+          items:
+            $ref: "#/components/schemas/Representative"
+        phones:
+          description: Телефоны Организации
+          type: array
+          maxItems: 30
+          items:
+            $ref: "#/components/schemas/Phone"
+        emails:
+          description: Адреса электорнных почт Организации
+          type: array
+          maxItems: 30
+          items:
+            $ref: "#/components/schemas/Email"
+        addresses:
+          description: Адрес Организации
+          type: array
+          maxItems: 20
+          items:
+            $ref: "#/components/schemas/OrganizationAddress"
+        importantDates:
+          description: Важные даты
+          type: array
+          maxItems: 30
+          items:
+            $ref: "#/components/schemas/ImportantDate"
+      additionalProperties: false
+    OrganizationAddress:
+      type: object
+      description: БС Адрес Организации
+      required:
+        - id
+        - fullAddress
+      properties:
+        id:
+          description: Уникальный идентификатор Адреса
+          maxLength: 50
+          pattern: ^[0-9]+$
+          type: string
+        longitude:
+          description: Долгота
+          type: string
+          maxLength: 100
+          pattern: ^.*$
+        latitude:
+          description: Широта
+          type: string
+          maxLength: 100
+          pattern: ^.*$
+        fullAddress:
+          description: Полные адрес
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        type:
+          $ref: "#/components/schemas/AddressType"
+      additionalProperties: false
+    ImportantDate:
+      type: object
+      description: Важная дата Организации
+      required:
+        - date
+        - type
+      properties:
+        date:
+          description: Дата
+          type: string
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+        type:
+          description: Тип даты
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+      additionalProperties: false
+    OrganizationBase:
+      type: object
+      description: БС Организация - базовая версия БС
+      required:
+        - id
+        - fullName
+        - residency
+        - opf
+      properties:
+        id:
+          $ref: "#/components/schemas/OrganizationIdProp"
+        inn:
+          $ref: "#/components/schemas/INNProp"
+        kio:
+          $ref: "#/components/schemas/KIOProp"
+        kpp:
+          $ref: "#/components/schemas/KPPProp"
+        ogrn:
+          $ref: "#/components/schemas/OGRNProp"
+        fullName:
+          $ref: "#/components/schemas/OrganizationFullNameProp"
+        shortName:
+          $ref: "#/components/schemas/OrganizationShortNameProp"
+        residency:
+          type: boolean
+          description: Резидент РФ
+        type:
+          $ref: "#/components/schemas/OrganizationType"
+        opf:
+          $ref: "#/components/schemas/LegalClassificationType"
+        kindOfActivity:
+          $ref: "#/components/schemas/KindOfActivity"
+        industry:
+          $ref: "#/components/schemas/Industry"
+        segment:
+          $ref: "#/components/schemas/OrganizationSegment"
+        mainOKVED:
+          $ref: "#/components/schemas/OKVED"
+        managersTeam:
+          description: Команда менеджеров
+          type: array
+          maxItems: 30
+          items:
+            $ref: "#/components/schemas/Manager"
+        clientData:
+          $ref: "#/components/schemas/ClientData"
+        partnerData:
+          $ref: "#/components/schemas/PartnerData"
+      additionalProperties: false
+    INNProp:
+      maxLength: 16
+      pattern: ^[0-9]+$
+      type: string
+      description: Индивидуальный Налоговый Номер Клиента (Резидента)
+    KIOProp:
+      maxLength: 16
+      pattern: ^[0-9]+$
+      type: string
+      description: Код Иностранной Организации (Не Резидента)
+    KPPProp:
+      maxLength: 16
+      pattern: ^[0-9]+$
+      type: string
+      description: Код Причины Постановки на учет
+    OGRNProp:
+      maxLength: 16
+      pattern: ^[0-9]+$
+      type: string
+      description: Основной Государственный Регистрационный Номер
+    OrganizationFullNameProp:
+      maxLength: 255
+      pattern: ^.*$
+      type: string
+      description: Полное наименование Организации
+    OrganizationShortNameProp:
+      maxLength: 255
+      pattern: ^.*$
+      type: string
+      description: Краткое наименование Организации
+    OrganizationType:
+      type: object
+      description: Тип Организации
+      required:
+        - code
+        - name
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    LegalClassificationType:
+      type: object
+      description: Организационно Правовая Форма
+      required:
+        - code
+        - name
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    KindOfActivity:
+      type: object
+      description: Вид деятельности
+      required:
+        - code
+        - name
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    Industry:
+      type: object
+      description: Отрасль
+      required:
+        - code
+        - name
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    OrganizationSegment:
+      type: object
+      description: Сегмент Организации
+      required:
+        - code
+        - name
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    OKVED:
+      type: object
+      description: Общероссийский  Классификатор Ведения Экономической Деятельности
+      required:
+        - code
+        - name
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код
+        positionCode:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Цифровой код
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    Manager:
+      type: object
+      description: Менеджер организации
+      properties:
+        employeeFullName:
+          description: ФИО менеджера
+          type: string
+          maxLength: 300
+          pattern: ^.*$
+        personnelNumber:
+          $ref: "#/components/schemas/EmployeeNumberProp"
+        teamRole:
+          description: Роль менеджера в команде
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        VKO:
+          description: Признак ВКО
+          type: boolean
+      additionalProperties: false
+    ClientData:
+      type: object
+      description: Клиентские данные
+      properties:
+        cooperation:
+          $ref: "#/components/schemas/ClientCooperation"
+        priority:
+          $ref: "#/components/schemas/ClientPriority"
+        status:
+          $ref: "#/components/schemas/ClientStatus"
+        engaged:
+          type: boolean
+          description: Признак вовлеченности клиента (engaged)
+      additionalProperties: false
+    ClientCooperation:
+      type: object
+      description: Тип Сотрудничества
+      required:
+        - code
+        - name
+      properties:
+        code:
+          $ref: "#/components/schemas/ClientCooperationCodeProp"
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    ClientCooperationCodeProp:
+      description: Код
+      maxLength: 255
+      pattern: ^.*$
+      type: string
+      enum:
+        - CLIENT
+        - NOT_CLIENT
+        - SLEEPING_CLIENT
+        - PROFITABLE_CLIENT
+    ClientPriority:
+      type: object
+      description: Приоритет Клиента
+      required:
+        - code
+        - name
+      properties:
+        code:
+          $ref: "#/components/schemas/ClientPriorityCodeProp"
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    ClientPriorityCodeProp:
+      description: Код
+      maxLength: 255
+      pattern: ^.*$
+      type: string
+      enum:
+        - KEY
+        - KEY_CKR
+        - MASS
+        - NONE
+    ClientStatus:
+      type: object
+      description: Статус Клиента
+      required:
+        - code
+        - name
+      properties:
+        code:
+          $ref: "#/components/schemas/ClientStatusCodeProp"
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    ClientStatusCodeProp:
+      description: Код
+      maxLength: 255
+      pattern: ^.*$
+      type: string
+      enum:
+        - ACTIVE
+        - POTENTIAL
+    PartnerData:
+      description: Набор партнерских данных
+      type: object
+      properties:
+        status:
+          $ref: "#/components/schemas/PartnerStatus"
+        statusNEO:
+          $ref: "#/components/schemas/PartnerStatusNEO"
+        category:
+          $ref: "#/components/schemas/PartnerCategory"
+        rbidos:
+          description: Признак РБиДОС
+          type: boolean
+        partnerships:
+          description: Коллекция видов партнерства
+          type: array
+          maxItems: 20
+          items:
+            $ref: "#/components/schemas/PartnershipType"
+      additionalProperties: false
+    PartnerStatus:
+      type: object
+      description: Статус Партнера
+      required:
+        - code
+        - name
+      properties:
+        code:
+          $ref: "#/components/schemas/PartnerStatusCodeProp"
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    PartnerStatusCodeProp:
+      description: Код
+      maxLength: 255
+      pattern: ^.*$
+      type: string
+      enum:
+        - ACTIVE
+        - POTENTIAL
+    PartnerStatusNEO:
+      description: Статус Партнера НЕО
+      type: object
+      required:
+        - code
+        - name
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    PartnerCategory:
+      type: object
+      description: Категория Партнера
+      required:
+        - code
+        - name
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    PartnershipType:
+      type: object
+      description: Вид партнерства
+      required:
+        - code
+        - name
+      properties:
+        code:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Код
+        name:
+          maxLength: 255
+          pattern: ^.*$
+          type: string
+          description: Значение
+      additionalProperties: false
+    OrganizationsViewRq:
+      type: object
+      description: Объект запроса
+      allOf:
+        - $ref: "#/components/schemas/OrganizationViewListEmployeeInfo"
+      required:
+        - paging
+        - sorting
+      properties:
+        subordinates:
+          description: Коллекция подчиненных
+          type: array
+          maxItems: 30
+          items:
+            $ref: "#/components/schemas/OrganizationViewListEmployeeInfo"
+        organizationIds:
+          description: Массив organizationId
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/OrganizationIdProp"
+        clientStatuses:
+          description: Статусы Клиента
+          type: array
+          maxItems: 5
+          items:
+            $ref: "#/components/schemas/ClientStatusCodeProp"
+        clientPriorities:
+          description: Приоритеты Клиента
+          type: array
+          maxItems: 5
+          items:
+            $ref: "#/components/schemas/ClientPriorityCodeProp"
+        partnerStatuses:
+          description: Статусы Партнера
+          type: array
+          maxItems: 5
+          items:
+            $ref: "#/components/schemas/PartnerStatusCodeProp"
+        noActivity:
+          description: Признак отсутствия активности с Организацией
+          type: boolean
+        searchBy:
+          description: Поисковый запрос
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        paging:
+          $ref: "#/components/schemas/PagingRq"
+        sorting:
+          description: Массив параметров сортировки
+          type: array
+          maxItems: 5
+          items:
+            $ref: "#/components/schemas/SorterOrganizationsView"
+      additionalProperties: false
+    OrganizationViewListEmployeeInfo:
+      type: object
+      description: Базовая информация сотрудника при запросе списка Организаций
+      properties:
+        employeeNumber:
+          $ref: "#/components/schemas/EmployeeNumberProp"
+        employeeRole:
+          $ref: "#/components/schemas/RoleCodeProp"
+      additionalProperties: false
+    SorterOrganizationsView:
+      type: object
+      description: Объект сортироки
+      required:
+        - key
+        - order
+      properties:
+        key:
+          $ref: "#/components/schemas/SorterOrganizationsViewKey"
+        order:
+          $ref: "#/components/schemas/SorterOrganizationsViewOrder"
+      additionalProperties: false
+    SorterOrganizationsViewKey:
+      maxLength: 100
+      pattern: ^.*$
+      type: string
+      description: Ключ сортировки
+      enum:
+        - ORGANIZATION_NAME
+        - HOLDING_NAME
+    SorterOrganizationsViewOrder:
+      maxLength: 10
+      pattern: ^.*$
+      type: string
+      description: Порядок сортировки
+      enum:
+        - DESC
+        - ASC
+    OrganizationsViewRs:
+      type: object
+      description: Объект ответа
+      allOf:
+        - $ref: "#/components/schemas/UniversalListRs"
+      properties:
+        data:
+          type: array
+          maxItems: 100
+          description: Бизнес данные запроса
+          items:
+            $ref: "#/components/schemas/OrganizationView"
+      additionalProperties: false
+    OrganizationView:
+      type: object
+      description: БС Организация в View представлении
+      allOf:
+        - $ref: "#/components/schemas/OrganizationBase"
+      required:
+        - activityIndicator
+      properties:
+        activityIndicator:
+          $ref: "#/components/schemas/OrganizationActivityIndicator"
+      additionalProperties: false
+    OrganizationActivityIndicator:
+      type: object
+      description: Индикатор активности Организации
+      required:
+        - indicatorType
+      properties:
+        indicatorType:
+          description: Тип индикатора
+          type: string
+          maxLength: 255
+          pattern: ^.*$
+        activityType:
+          type: string
+          description: Тип активности
+          maxLength: 255
+          pattern: ^.*$
+        date:
+          description: Дата активности
+          type: string
+          format: date-time
+      additionalProperties: false
+    UniversalListRs:
+      type: object
+      description: Объект ответа
+      allOf:
+        - $ref: "#/components/schemas/UniversalRs"
+      properties:
+        paging:
+          $ref: "#/components/schemas/PagingRs"
+      additionalProperties: false
+  parameters:
+    meetingIdParam:
+      name: meetingId
+      in: path
+      description: Уникальный идентификатор Встречи
+      required: true
+      schema:
+        type: string
+        maxLength: 32
+        pattern: ^.*$
+        description: описание типа
+      example: 1-GHB78-HL
+    taskIdParam:
+      name: taskId
+      in: path
+      description: Идентификатор задачи
+      required: true
+      schema:
+        maxLength: 50
+        pattern: ^[0-9]+$
+        type: string
+        description: Идентификатор задачи
+      example: 1231241241241241
+    meetingCommentIdParam:
+      name: commentId
+      in: path
+      description: Уникальный идентификатор комментария к Встрече
+      required: true
+      schema:
+        type: string
+        maxLength: 32
+        pattern: ^.*$
+        description: описание типа
+      example: 1-GHB78-HL
+    organizationIdParam:
+      name: organizationId
+      in: path
+      description: Уникальный идентификатор Организации
+      required: true
+      schema:
+        type: string
+        maxLength: 50
+        pattern: ^[0-9]+$
+        description: описание типа
+      example: 7777741241241241
+    organizationNoteIdParam:
+      name: organizationNoteId
+      in: path
+      description: Идентификатор Заметки
+      required: true
+      schema:
+        type: string
+        description: описание типа
+        maxLength: 32
+        pattern: ^.*$
+      example: 82938492
+    representativeIdParam:
+      name: representativeId
+      in: path
+      description: Уникальный идентификатор Представителя
+      required: true
+      schema:
+        type: string
+        maxLength: 50
+        pattern: ^[0-9]+$
+        description: описание типа
+      example: 1231241241241241
