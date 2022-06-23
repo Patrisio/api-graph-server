@@ -1,26 +1,34 @@
-const express = require('express');
+const express = require("express");
+const YAML = require("yamljs");
+const fileUpload = require("express-fileupload");
+
 const app = express();
-const port = 8080;
-const path = require('path');
-const YAML = require('yamljs');
+const port = 8300;
 
-app.get('/hello', (req, res) => {
-  const options = {
-    root: path.resolve(__dirname, '..', 'api-graph', 'public'),
-  };
-  res.sendFile('index.html', options);
-});
+app.use(
+  fileUpload({
+    createParentPath: true,
+  })
+);
 
-app.get('/ping', (req, res) => {
-  console.log(1111);
-  res.send('pong');
-});
+app.use(express.static(
+  path.join(__dirname, "../api-graph/build"))
+);
 
-app.get('/getData', (req, res) => {
-  YAML.load(path.resolve(__dirname, 'sample.yaml'), function(result) {
-    // nativeObject = result;
-    res.send(result);
-  });
+app.post("/getData", async (req, res) => {
+  const file = req.files;
+
+  if (!file) {
+    res.send({
+      status: false,
+      message: "Не было загружено ни одного файла",
+    });
+  }
+
+  const yamlString = new Buffer.from(file.yaml.data).toString();
+  const yaml2json = await YAML.parse(yamlString);
+
+  res.send(yaml2json);
 });
 
 app.listen(port, () => {
